@@ -1,9 +1,14 @@
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 
-function App() {
-  return (
-    <h1>Hello World</h1>
-  );
-}
+import Routes from './routes';
+
+const App: React.FC = () => (
+  //<Routes />; Por so ter 1 componente posso utilizar direto, sem return...
+  // com + de 1 componente e linha necessita do parenteses por volta...
+  <BrowserRouter> {/**é a '/' qdo digita a url, é o caminho q esta em index.tsx */}
+    <Routes />
+  </BrowserRouter>
+);
 
 export default App;
