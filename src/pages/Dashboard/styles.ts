@@ -45,3 +45,60 @@ export const Form = styled.form`
   }
 `;
 // flex:1 -> ocupa o valor maximo possível até o proximo container (td menos o button)
+
+export const Repositories = styled.div`
+  margin-top: 120px;
+  max-width: 700px;
+
+  a {
+    background: #fff;
+    border-radius: 5px;
+    width: 100%;
+    padding: 15px;
+    display: block;
+    text-decoration: none;
+
+    display: flex;
+    align-items: center;
+    transition: transform 0.2s;
+
+    &:hover {
+      transform: translateX(5px);
+      box-shadow: 0px 1px 5px #3a3a3a;
+    }
+
+    {/**do 2° elemento em diante recebe */}
+    & + a {
+      margin-top: 10px;
+    }
+
+    img {
+      width: 75px;
+      height: 75px;
+      border-radius: 50%;
+    }
+
+    div {
+      margin-left: 10px;
+
+      strong {
+        font-size: 20px;
+        color: #3a3a3a;
+      }
+
+      p {
+        font-size: 16px;
+        color: #3a3a3a;
+        opacity: 0.9;
+        margin-top: 1px;
+      }
+    }
+
+    svg {
+      margin-left: auto;
+      color: #0366d6;
+      opacity: 0.8;
+    }
+
+  }
+`;
