@@ -23,8 +23,8 @@ interface Repository {
 }
 
 const Dashboard: React.FC = () => {
-  const [newRepo, setNewRepo] = useState(''); // Valor do Input
-  const [inputError, setInputError] = useState('');
+  const [newRepo, setNewRepo] = useState(''); // Valor do Input, string
+  const [inputError, setInputError] = useState(''); // string
   const [repositories, setRepositories] = useState<Repository[]>([]);
 
   async function handleAddRepository(
@@ -38,16 +38,16 @@ const Dashboard: React.FC = () => {
     }
 
     try {
-      // Adicão de um novo repositorio:1° buscar API do Github 2° Salvar novo repositorio no estado
-      const response = await api.get<Repository>(`repos/${newRepo}`);
+        // Adicão de um novo repositorio:1° buscar API do Github 2° Salvar novo repositorio no estado
+        const response = await api.get<Repository>(`repos/${newRepo}`);
 
-      const repository = response.data;
+        const repository = response.data;
 
-      setRepositories([...repositories, repository]);  // copio a lista p n perder os dados e adiciono o novo dado
-      setNewRepo(''); //limpar input p nova busca
-      setInputError('') //limpa mensagem de erro
+        setRepositories([...repositories, repository]);  // copio a lista p n perder os dados e adiciono o novo dado
+        setNewRepo(''); //limpar input p nova busca
+        setInputError('') //limpa mensagem de erro
     } catch (err) {
-      setInputError('Erro na busca. Fovor vefificar Autor/Nome do repositorio');
+        setInputError('Erro na busca. Fovor vefificar Autor/Nome do repositorio');
     }
 
   }
@@ -57,7 +57,7 @@ const Dashboard: React.FC = () => {
       <img src={logo} alt="GitHub Busce" width="15" />
       <Title>Busqua repositórios no GitHub :)</Title>
 
-      <Form onSubmit={handleAddRepository}>
+      <Form hasError={Boolean(inputError)} onSubmit={handleAddRepository}>
         <input
           value={newRepo} // text digitado, texto q o input tem
           onChange={(e) => setNewRepo(e.target.value)} //qdo o usuario altera o valor do input, recebe um evento

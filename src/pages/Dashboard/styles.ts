@@ -1,4 +1,8 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+
+interface FormProps {
+  hasError: boolean;
+}
 
 //Templetes Literals `CSS dentro`;
 export const Title = styled.h1`
@@ -7,7 +11,7 @@ export const Title = styled.h1`
   margin-top: 20px;
 `;
 
-export const Form = styled.form`
+export const Form = styled.form<FormProps>`
   margin-top: 30px;
   max-width: 700px;
 
@@ -21,7 +25,10 @@ export const Form = styled.form`
     box-shadow: 0px 1px 10px #3a3a3a;
     border-radius: 5px 0 0 5px;
     font-weight: bold;
-    color: #3a3a3a;
+
+    ${(props) => props.hasError && css`
+    box-shadow: 0px 1px 10px red;
+    `}
 
     &::placeholder {
       color: #a8a8b3;
