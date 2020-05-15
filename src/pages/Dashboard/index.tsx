@@ -9,7 +9,7 @@ import api from '../../services/api';
 
 import logo from '../../assets/lupa.svg';
 
-import { Title, Form, Repositories } from './styles';
+import { Title, Form, Repositories, Error  } from './styles';
 
 // tenho q criar interface dos repositories, setRepositories, se erro
 // **só tenho q fazer tipagem do q eu for usar da API, n tenho q fazer de td
@@ -24,38 +24,50 @@ interface Repository {
 
 const Dashboard: React.FC = () => {
   const [newRepo, setNewRepo] = useState(''); // Valor do Input
+  const [inputError, setInputError] = useState('');
   const [repositories, setRepositories] = useState<Repository[]>([]);
 
   async function handleAddRepository(
     event: FormEvent<HTMLFormElement>
-    ): Promise<void> {
-    // evento do submit - FormEvent, evento do formulario
+  ): Promise<void> {
     event.preventDefault(); // o submit recarrega a pagina, esse evita recarregar
-    // Adicão de um novo repositorio
-    // 1° buscar/Consumir API do Github
-    // 2° Salvar novo repositorio no estado
-    const response = await api.get<Repository>(`repos/${newRepo}`);
 
-    const repository = response.data;
+    if (!newRepo) {
+      setInputError('Digite Autor/Nome do repositorio para efetuar a busca');
+      return;
+    }
 
-    setRepositories([...repositories, repository]);  // copio a lista p n perder os dados e adiciono o novo dado
-    setNewRepo(''); //limpar input p nova busca
+    try {
+      // Adicão de um novo repositorio:1° buscar API do Github 2° Salvar novo repositorio no estado
+      const response = await api.get<Repository>(`repos/${newRepo}`);
+
+      const repository = response.data;
+
+      setRepositories([...repositories, repository]);  // copio a lista p n perder os dados e adiciono o novo dado
+      setNewRepo(''); //limpar input p nova busca
+      setInputError('') //limpa mensagem de erro
+    } catch (err) {
+      setInputError('Erro na busca. Fovor vefificar Autor/Nome do repositorio');
+    }
 
   }
 
   return (
     <>
       <img src={logo} alt="GitHub Busce" width="15" />
-      <Title>Busque repositórios no GitHub :)</Title>
+      <Title>Busqua repositórios no GitHub :)</Title>
 
       <Form onSubmit={handleAddRepository}>
         <input
           value={newRepo} // text digitado, texto q o input tem
           onChange={(e) => setNewRepo(e.target.value)} //qdo o usuario altera o valor do input, recebe um evento
-          placeholder="Digite a busca aqui" type="text"
+          placeholder="Digite a busca aqui -> autor/nome repositorio" type="text"
         />
         <button type="submit">Buscar</button>
       </Form>
+
+      {/**Só mostra o error se ele tem algum valor -> uso if 'simplificado' do React -> se 1° acontece, executo 2° */}
+      { inputError && <Error>{inputError}</Error> }
 
       {/**um container com: foto, nome repositorio e descrição */}
         {/**map p percorrer td o repository */}
@@ -73,7 +85,7 @@ const Dashboard: React.FC = () => {
             </div>
 
             <FiChevronRight size={20} />
-        </a>
+          </a>
         ))}
       </Repositories>
     </>

@@ -46,6 +46,12 @@ export const Form = styled.form`
 `;
 // flex:1 -> ocupa o valor maximo possível até o proximo container (td menos o button)
 
+export const Error = styled.span`
+  display: block;
+  color: red;
+  margin-top: 12px;
+`;
+
 export const Repositories = styled.div`
   margin-top: 120px;
   max-width: 700px;
@@ -102,3 +108,5 @@ export const Repositories = styled.div`
 
   }
 `;
+
+
