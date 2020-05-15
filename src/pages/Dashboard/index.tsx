@@ -3,7 +3,7 @@
 // Tipagem -> React.FC
 // FC: function Component
 //Rota principal do app
-import React, { useState, FormEvent } from 'react';
+import React, { useState, FormEvent, useEffect } from 'react';
 import { FiChevronRight } from 'react-icons/fi';
 import api from '../../services/api';
 
@@ -26,6 +26,14 @@ const Dashboard: React.FC = () => {
   const [newRepo, setNewRepo] = useState(''); // Valor do Input, string
   const [inputError, setInputError] = useState(''); // string
   const [repositories, setRepositories] = useState<Repository[]>([]);
+
+  //Argument of type 'Repository[]' is not assignable to parameter of type 'string' ->JSON.stringify
+  useEffect(() => {
+    localStorage.setItem(
+      '@Api_GitHub:repositories',
+      JSON.stringify(repositories)
+    );
+  }, [repositories]);
 
   async function handleAddRepository(
     event: FormEvent<HTMLFormElement>
