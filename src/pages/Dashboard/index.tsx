@@ -25,7 +25,15 @@ interface Repository {
 const Dashboard: React.FC = () => {
   const [newRepo, setNewRepo] = useState(''); // Valor do Input, string
   const [inputError, setInputError] = useState(''); // string
-  const [repositories, setRepositories] = useState<Repository[]>([]);
+  const [repositories, setRepositories] = useState<Repository[]>(() => {
+    const storageRepositories = localStorage.getItem('@Api_GitHub:repositories');
+
+    if (storageRepositories) {
+      return JSON.parse(storageRepositories); // .parse p desfazer .stringify
+    } else {
+      return [];
+    }
+  });
 
   //Argument of type 'Repository[]' is not assignable to parameter of type 'string' ->JSON.stringify
   useEffect(() => {
