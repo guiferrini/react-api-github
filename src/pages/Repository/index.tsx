@@ -27,6 +27,7 @@ interface Repository {
 
 interface Issue {
   id: number;
+  html_url: string;
   title: string;
   user: {
     login: string;
@@ -41,11 +42,11 @@ const Repository: React.FC = () => {
 
 useEffect(() => {
   api.get(`repos/${params.repository}`).then(response => {
-    console.log(response.data);
+    setRepository(response.data);
   });
 
   api.get(`repos/${params.repository}/issues`).then(response => {
-    console.log(response.data);
+    setIssues(response.data);
   });
 
   // alternatica, await all, faz tds as promises e retorna o resultado juntas
@@ -74,46 +75,52 @@ useEffect(() => {
         </Link>
       </Header>
 
-      <RepositoryInformation>
-        <header>
-          <img
-            src="https://avatars2.githubusercontent.com/u/60007731?s=460&u=27edaa0ac331278d60be9c30ce03cc4b1c977399&v=4"
-            alt="gui"
-          />
-          <div>
-            <strong>
-              guiferri/meu_app
-            </strong>
-            <p>
-              descrição...
-            </p>
-          </div>
-        </header>
-        <ul>
-          <li>
-            <strong>1000</strong>
-            <span>starts</span>
-          </li>
-          <li>
-            <strong>1000</strong>
-            <span>starts</span>
-          </li>
-          <li>
-            <strong>1000</strong>
-            <span>starts</span>
-          </li>
-        </ul>
-      </RepositoryInformation>
+      {/**criando uma condição: se o repositorio existir, entao(&&), efetuo a criação */}
+      { repository && (
+        <RepositoryInformation>
+          <header>
+            <img
+              src={repository.owner.avatar_url}
+              alt={repository.owner.login}
+            />
+            <div>
+              <strong>
+                {repository.full_name}
+              </strong>
+              <p>
+                {repository.description}
+              </p>
+            </div>
+          </header>
+          <ul>
+            <li>
+              <strong>{repository.stargazers_count}</strong>
+              <span>Stars</span>
+            </li>
+            <li>
+              <strong>{repository.forks_count}</strong>
+              <span>Forks</span>
+            </li>
+            <li>
+              <strong>{repository.open_issues_count}</strong>
+              <span>Issues</span>
+            </li>
+          </ul>
+        </RepositoryInformation>
+      )}
 
       <Issues>
-        <Link to="huahua">
-          <div>
-            <strong>lalal</strong>
-            <p>asd</p>
-          </div>
+        {issues.map(issues => (
+          /**Uso 'a', p direcionar p link externo */
+          <a key={issues.id} href={issues.html_url}>
+            <div>
+              <strong>{issues.title}</strong>
+              <p>{issues.user.login}</p>
+            </div>
 
-          <FiChevronRight size={20} />
-        </Link>
+            <FiChevronRight size={20} />
+          </a>
+        ))}
       </Issues>
     </>
   );
