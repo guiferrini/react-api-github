@@ -81,7 +81,7 @@ export const Repositories = styled.div`
       box-shadow: 0px 1px 5px #3a3a3a;
     }
 
-    {/**do 2° elemento em diante recebe */}
+    /**do 2° elemento em diante recebe */
     & + a {
       margin-top: 10px;
     }

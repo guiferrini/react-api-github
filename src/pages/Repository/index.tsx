@@ -2,11 +2,11 @@
 // FC: function Component
 import React from 'react';
 import { useRouteMatch, Link } from 'react-router-dom';
-import { FiChevronLeft } from 'react-icons/fi'
+import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
 
 import logo from '../../assets/lupa.svg';
 
-import { Header, RepositoryInformation } from './styles';
+import { Header, RepositoryInformation, Issues } from './styles';
 
 interface RepositoryParams {
   repository: string;
@@ -20,7 +20,6 @@ const Repository: React.FC = () => {
       <Header>
         <img src={logo} alt="GitHub Busce" width="15" />
         <Link to='/'>
-
           <FiChevronLeft size={20}/>
           Voltar
         </Link>
@@ -55,8 +54,18 @@ const Repository: React.FC = () => {
             <span>starts</span>
           </li>
         </ul>
-
       </RepositoryInformation>
+
+      <Issues>
+        <Link to="huahua">
+          <div>
+            <strong>lalal</strong>
+            <p>asd</p>
+          </div>
+
+          <FiChevronRight size={20} />
+        </Link>
+      </Issues>
     </>
   );
 }
