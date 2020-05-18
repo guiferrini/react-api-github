@@ -25,7 +25,7 @@ interface Repository {
 
 const Dashboard: React.FC = () => {
   const [newRepo, setNewRepo] = useState(''); // Valor do Input, string
-  const [inputError, setInputError] = useState(''); // string
+  const [inputError, setInputError] = useState(''); // n eh um valor primitivo (string, number, boolean), qdo é uma array ou objeto devemos tipar a info do estsado
   const [repositories, setRepositories] = useState<Repository[]>(() => {
   const storageRepositories = localStorage.getItem('@Api_GitHub:repositories');
 
