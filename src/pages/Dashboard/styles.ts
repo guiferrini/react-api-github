@@ -70,6 +70,7 @@ export const Repositories = styled.div`
     padding: 15px;
     display: block;
     text-decoration: none;
+    color: #0366d6;
 
     display: flex;
     align-items: center;
